@@ -1,0 +1,48 @@
+#include <iostream>
+#include <new>
+#include <thread>
+#include <future>
+using namespace std;
+
+double funcA(double a)
+{
+	if (a < 1)
+		throw "less than 1";
+	return a*a;
+}
+
+int * funcC() {
+	int * t = new int;
+	return t;
+}
+
+int funcB(int b) {
+	if (b < 5)
+		return b;
+	return b * 2;
+}
+
+int main() {
+	int iValue, *iPtr;
+	double dValue;
+	cin >> iValue >> dValue;
+	future<double>dV = std::async(funcA, dValue);
+	try {
+		dValue = dV.get();
+	}
+	catch (const char *s) {
+		cout << s << endl;
+	}
+	cout << dValue << endl;
+	future<int>iV = std::async(funcB, iValue);
+	iValue = iV.get();
+	cout << iValue << endl;
+	future<int *>iP = std::async(funcC);
+	try {
+		iPtr = iP.get();
+	}
+	catch (const bad_alloc& e) {
+		cout << "Allocation failed\n";
+	}
+	return 0;
+}
