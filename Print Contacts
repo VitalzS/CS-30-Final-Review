@@ -1,0 +1,35 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <utility>
+#include <map>
+using namespace std;
+
+void printContacts(map<string, vector<pair<string, string>>>& contacts) {
+	map<string, vector<pair<string, string>>>::iterator it;
+
+	for (it = contacts.begin(); it != contacts.end(); ++it)
+	{
+		cout << it->first << endl;
+		vector<pair<string, string>>::iterator it2;
+		for (it2 = it->second.begin(); it2 != it->second.end(); ++it2)
+		{
+			cout << '\t' << it2->first << " " << it2->second << endl;
+		}
+	}
+	return;
+}
+
+int main() {
+	map<string, vector<pair<string, string>>> contacts;
+	// emplace just pushes the two strings as a pair to the
+	// back of the vector. It's similar to push_back.
+	contacts["Jerry"].emplace_back("home:", "3104444444");
+	contacts["Jerry"].emplace_back("cell:", "2135555555");
+	contacts["Sarah"].emplace_back("email:", "s@elco.edu");
+	contacts["Sarah"].emplace_back("cell:", "8186666666");
+
+	printContacts(contacts);
+
+	return 0;
+}
