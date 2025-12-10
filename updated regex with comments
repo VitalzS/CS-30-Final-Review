@@ -1,0 +1,26 @@
+#include <regex>
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+	string str;
+
+	while (true) {
+
+		getline(cin, str);
+		if (str == "")
+			break;
+		//regex e("a{3}c+b?");			stuff like aaac, ac, aaaacccbb
+		//regex e("a|b|c");				stuff like a, b, c
+		//regex e("h[^e]l.lo");			stuff like hal.lo, hbl.lo, anything but 'e' in that value 
+		//regex e("^(ca)?t{3,}\\1");	stuff like ttt, cattt, catttttt
+		//regex e("[0-9]{3} *([-.' '])?[0-9]{3}\\1 *[0-9]{4}");		stuff like 123 - 456 - 7890, 123.456.7890, 123 456 7890, 1234567890
+		//regex e("^([1-9]|1[0-2])\\:[0-5][0-9]*(am|pm)$");
+		regex e("^[[:alpha:]]{2}[0-9]{1,2}$");
+		bool match = regex_search(str, e);
+		cout << (match ? "Matched" : "Not matched") << endl << endl;
+	}
+
+	return 0;
+}
